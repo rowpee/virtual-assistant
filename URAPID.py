@@ -43,7 +43,7 @@ hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
 
 
-send_url = "http://api.ipstack.com/check?access_key=daec8a00f55331fb098321beb855f7aa"
+send_url = "http://api.ipstack.com/check?access_key=ENTER_API"
 geo_req = requests.get(send_url)
 geo_json = json.loads(geo_req.text)
 latitude = geo_json['latitude']
@@ -64,8 +64,6 @@ def wishMe():
     else:
         speak("Good Evening!")  
 
-f=open(r"C:\ProgramData\ASUS\ASUS Live Update\Temp\URAPID\file.txt", "r")
-c = int(f.read())
 
 def takeCommand():
    
@@ -90,7 +88,7 @@ def takeCommand():
        
    
 def taketemp():
- complete_url ="http://api.openweathermap.org/data/2.5/weather?"  + "appid=" + "5fa422bda9c9e568292c78507604a779" + "&q=" + city
+ complete_url ="http://api.openweathermap.org/data/2.5/weather?"  + "appid=" + "ENTER_API" + "&q=" + city
 
 
  response = requests.get(complete_url) 
@@ -115,7 +113,7 @@ def taketemp():
   print(" City Not Found ") 
 
 def takeweather():
-     complete_url ="http://api.openweathermap.org/data/2.5/weather?"  + "appid=" + "5fa422bda9c9e568292c78507604a779" + "&q=" + city
+     complete_url ="http://api.openweathermap.org/data/2.5/weather?"  + "appid=" + "ENTER_API" + "&q=" + city
 
 
      response = requests.get(complete_url) 
@@ -263,7 +261,7 @@ while True:
             print(translated.text)
 
         elif 'add list' in query:
-            mydb = mysql.connector.connect(host='localhost',user='root', password='admin', database="urapid")
+            mydb = mysql.connector.connect(host='DATABASE-HOST',user='USER', password='#', database="#")
             cur=mydb.cursor()
             m = query.replace("add list", "")
             s = "INSERT INTO label(id,list) VALUES(%s,%s)"
@@ -272,7 +270,7 @@ while True:
             mydb.commit()
         
         elif 'speak list' in query:
-            mydb = mysql.connector.connect(host='localhost',user='root', password='admin', database="urapid")
+            mydb = mysql.connector.connect(host='',user='', password='', database="")
             cur=mydb.cursor()
             s="SELECT * from label"
             cur.execute (s)
@@ -285,7 +283,7 @@ while True:
              
 
         elif 'delete' in query:
-            mydb = mysql.connector.connect(host='localhost',user='root', password='admin', database="urapid")
+            mydb = mysql.connector.connect(host='',user='', password='', database="")
             cur=mydb.cursor()
             s ="delete from label where id=1"
             cur.execute(s)
@@ -330,8 +328,8 @@ while True:
              w = Timer(5.0 ,plays)
              w.start()
              
-        elif 'youtube ' in query:
-            plo = query.replace("youtube video ", "")
+        elif 'youtube' in query:
+            plo = query.replace("youtube", "")
             webbrowser.open("https://www.youtube.com/results?search_query="+plo+"&sp=EgIQAQ%253D%253D")
             a = Timer(5.0, youthoob)
             a.start()
@@ -348,22 +346,8 @@ while True:
           local_time = float(m)
           local_time = local_time * 60
           time.sleep(local_time)
-          playsound('C:\\ProgramData\\ASUS\\ASUS Live Update\\Temp\\URAPID\\rip.mp3')
-
-        elif 'screenshot' in query:
-         keyboard.press_and_release('win+prnt_scrn')
-         speak("Screen shot taken would you like to see")
-         f=open(r"C:\ProgramData\ASUS\ASUS Live Update\Temp\URAPID\file.txt", "w")
-         mp = c+1
-         opo=str(mp)
-         f.write(opo)
-         f.close()
+          playsound('rip.mp3')
          
-        elif 'yes' in query:
-            scp = str(mp)
-            mo = "("+scp+")"
-            path = ("C:\\Users\\Karthik\\Pictures\\Screenshots\\Screenshot"+" "+mo+".png")
-            os.startfile(path)
         
         elif 'close' in query:
             keyboard.press_and_release('alt+F4')
@@ -383,37 +367,12 @@ while True:
             pyautogui.typewrite(jol)
             keyboard.press_and_release('enter')
 
-        elif 'question' in query:
-            answer = takeAnswer()
-            mydb = mysql.connector.connect(host='localhost',user='root', password='admin', database='ai')
-            cur=mydb.cursor()
-            ques = query.replace("question ", "")
-            s = "INSERT INTO qna(question,answer) VALUES(%s,%s)"
-            b1 = (ques,answer)
-            cur.execute(s,b1)
-            mydb.commit()
-
-        elif 'answer' in query:
-            mydb = mysql.connector.connect(host='localhost',user='root', password='admin', database="ai")
-            cur=mydb.cursor()
-            jo =query.replace("answer ","")
-            mo =jo.lower()
-            s= "SELECT * FROM qna WHERE question =%s "
-            cur.execute(s,(mo,))
-            result = cur.fetchall()
-
-            for rec in result:
-             values = ','.join(map(str, rec))
-             lib= values.replace(jo ,"")
-             print(lib)   
-             speak(lib)   
-
         elif 'find path' in query:
             speak("say Starting Destination")
             print("Starting Destination")
             start = takeAnswer()
             if 'current location' in start:
-                mui ="29.857913, 77.874561"
+                mui ="YOUR_LATITUDE, YOUR_LONGITUDE"
             else:
              mui = start.replace(" ","+") 
             speak("speak ending destination")
@@ -422,10 +381,7 @@ while True:
             nui = end.replace(" ","+")
             webbrowser.open("https://www.google.com/maps/dir/"+mui+"/"+nui)
 
-        elif 'start session' in query:
-            webbrowser.open("https://vedantu.com")
-            map = Timer(5.0 ,session)
-            map.start()
+
 
         elif 'tab' in query:
             ko= query.replace('tab',"")
